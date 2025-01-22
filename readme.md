@@ -8,14 +8,14 @@ It also includes buying different species of pets and also selling their pets fo
 
 #Features
 
-My Application has inspiring stories of the pets, and how they become famous
+1. My Application has inspiring stories of the pets, and how they become famous
 
-Their is different pets and their profile, if we follow those pets, we can get updates of those pets frequently, this helps to stay updated on knowing those pets.
+2. Their is different pets and their profile, if we follow those pets, we can get updates of those pets frequently, this helps to stay updated on knowing those pets.
 
-We can also comment and like the posts of specific famous pets that we follow
+3. We can also comment and like the posts of specific famous pets that we follow
 
-Detailed statistics on individual pet earnings.
+4. Detailed statistics on individual pet earnings.
 
-Filtering options to explore pets by net worth, breed, or country.
+5. Filtering options to explore pets by net worth, breed, or country.
 
-Dynamic data updates and interactive graphs.
+6. Dynamic data updates and interactive graphs.
