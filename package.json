@@ -1,0 +1,19 @@
+{
+  "name": "s74_net_worth_of_famous_pets",
+  "version": "1.0.0",
+  "description": "Famous pets and their networth",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalviumcommunity/s74_Net_Worth_of_Famous_Pets.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalviumcommunity/s74_Net_Worth_of_Famous_Pets/issues"
+  },
+  "homepage": "https://github.com/kalviumcommunity/s74_Net_Worth_of_Famous_Pets#readme"
+}
