@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/kalviumcommunity/s74_Net_Worth_of_Famous_Pets/issues"
   },
-  "homepage": "https://github.com/kalviumcommunity/s74_Net_Worth_of_Famous_Pets#readme"
+  "homepage": "https://github.com/kalviumcommunity/s74_Net_Worth_of_Famous_Pets#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
