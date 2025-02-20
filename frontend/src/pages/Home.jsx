@@ -30,6 +30,7 @@ export default function Home() {
             <h2 className="card-title">{pet}</h2>
             <p className="card-text">Click to explore their net worth!</p>
             <button className="button">View Details</button>
+            <button className="button">Contact Owner</button>
           </div>
         ))}
       </motion.div>
