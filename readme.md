@@ -19,3 +19,5 @@ It also includes buying different species of pets and also selling their pets fo
 5. Filtering options to explore pets by net worth, breed, or country.
 
 6. Dynamic data updates and interactive graphs.
+
+Done
