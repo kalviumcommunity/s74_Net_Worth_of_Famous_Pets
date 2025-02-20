@@ -31,6 +31,7 @@ export default function Home() {
             <p className="card-text">Click to explore their net worth!</p>
             <button className="button">View Details</button>
             <button className="button">Contact Owner</button>
+            <button className="button">Browse</button>
           </div>
         ))}
       </motion.div>
