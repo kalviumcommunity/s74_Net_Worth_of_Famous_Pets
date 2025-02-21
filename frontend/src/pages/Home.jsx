@@ -97,6 +97,7 @@ const styles = `
   background-color: #4299e1;
   color: white;
   border: none;
+  margin:5px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
