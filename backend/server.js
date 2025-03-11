@@ -1,33 +1,17 @@
-require("dotenv").config();
-const express = require("express");
-const { MongoClient } = require("mongodb");
-const routes = require("./routes"); // Import routes
+const express = require('express')
+const cors = require('cors')
+const petfinderRoutes = require('./routes/petfinder')
 
 const app = express();
-const PORT = 3000;
 
-const client = new MongoClient(process.env.MONGO_URI);
+const PORT = process.env.PORT || 5000
 
-async function connectDB() {
-    try {
-        await client.connect();
-        console.log("✅ Database Connected Successfully!");
-    } catch (error) {
-        console.error("❌ Database Connection Failed:", error);
-    }
-}
+app.use(cors())
+app.use(express.json())
+app.use('/api/petfinder', petfinderRoutes)
 
-connectDB();
 
-app.use(express.json()); // Middleware to parse JSON
-// app.locals.client = client; // Store DB client for routes
-
-app.use("/", routes); // Use the CRUD routes
-
-app.get("/ping", (req, res) => {
-    res.send("pong");
-});
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+    console.log(`Your server is Running on Port ${PORT}`)
+})
