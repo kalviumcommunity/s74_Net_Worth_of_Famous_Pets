@@ -1,114 +1,50 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
+import Navbarout from '../components/Navbarout';
+import { data } from '../assets/data';
+import Contact from "../components/Contacts"
 
-export default function Home() {
+const Home = () => {
+  const [search, setSearch] = useState('');
+
   return (
-    <div className="container">
-      <motion.h1
-        className="title"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        Net Worth of Famous Pets
-      </motion.h1>
-      <motion.p
-        className="description"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Discover the incredible fortunes of the world's most famous pets. From Instagram stars to Hollywood icons, see how these animals have built their wealth!
-      </motion.p>
-      <motion.div
-        className="grid-container"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-      >
-        {["Richie the Cat", "Buddy the Dog", "Lola the Parrot"].map((pet, index) => (
-          <div key={index} className="card">
-            <h2 className="card-title">{pet}</h2>
-            <p className="card-text">Click to explore their net worth!</p>
-            <button className="button">View Details</button>
-            <button className="button">Contact Owner</button>
-            <button className="button">Browse</button>
+    <div className="bg-gradient-to-r from-purple-900 via-blue-900 to-gray-900 text-white min-h-screen">
+      <Navbarout />
+      <main className="flex flex-col items-center justify-center text-center px-6 py-20">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Where Luxury Meets Loyalty – Explore the World of Richy Pets!
+          </h1>
+          <p className="text-lg md:text-xl text-yellow-200 mb-6">
+            Discover the world’s wealthiest and most famous pets! 🐾💰 Explore their net worth, fascinating stories, and even adopt your own furry companion through our Petfinder integration.
+          </p>
+        </div>
+        <button className="mt-4 px-6 py-3 bg-yellow-500 text-black font-semibold text-lg rounded-xl hover:bg-gray-600 border-2 hover:text-white transition duration-300">
+          Explore Here
+        </button>
+      </main>
+      <div className=' mt-45 flex justify-center w-full' >
+      <input type="text" className='w-200 px-4 py-3 text-white bg-gray-800 border border-yellow-400 rounded-lg outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300 '  onChange={(e) => setSearch(e.target.value)}   placeholder='Search Pet' />
+      </div>
+      {/* Pet Cards Section */}
+      <div className="container py-25 mx-auto px-4   grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {data.filter((item) =>{
+          return search.toLowerCase() === '' ? item : item.first_name.toLowerCase().includes(search)
+        } ).splice(0,10).map((item, index) => (
+          <div key={index} className="bg-[#1E293B] text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-700">
+            <img src= "https://marltons.co.za/cdn/shop/articles/Marltons_Pets_and_stress_OpEd.jpg?v=1652343854" 
+            className='b' />
+            <h1 className="text-2xl font-bold text-yellow-400"> Pet - {item.first_name}</h1>
+            <h2 className="text-lg text-gray-300"> Gender - {item.gender}</h2>
+            <h2 className="text-lg text-gray-300"> Price - {item.price}</h2>
+            <h3 className="text-md font-semibold mb-3 mt-2"> Owner - {item.pet_owner_name}</h3>
+            <p className="text-sm text-gray-400"> Mail - {item.owner_email}</p>
+            <p className="text-sm text-gray-400"> Phone - {item.owner_phone}</p>
           </div>
         ))}
-      </motion.div>
+      </div>
+      <Contact />
     </div>
   );
-}
+};
 
-// Inline CSS styles
-const styles = `
-.container {
-  min-height: 100vh;
-  background-color: #1a202c;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2.5rem;
-  text-align: center;
-}
-
-.title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-}
-
-.description {
-  font-size: 1.25rem;
-  color: #a0aec0;
-  max-width: 40rem;
-  margin-bottom: 2rem;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 60rem;
-}
-
-.card {
-  background-color: #2d3748;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.card-text {
-  color: #cbd5e0;
-  margin-bottom: 1rem;
-}
-
-.button {
-  padding: 0.5rem 1rem;
-  background-color: #4299e1;
-  color: white;
-  border: none;
-  margin:5px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-}
-
-.button:hover {
-  background-color: #3182ce;
-}
-`;
-
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
+export default Home;
