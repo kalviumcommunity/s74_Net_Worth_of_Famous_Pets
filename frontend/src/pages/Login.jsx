@@ -7,23 +7,32 @@ const Login= ()=>{
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        const res = await fetch("http://localhost:9090/api/login", {
-            method:"POST",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({email,password})
-        });
-
-        const data = await res.json();
-        if(data.success) {
-            alert("Login Successful");
-            navigate('/');
-        }
-        else {
-
-            alert("Invalid credentials")
-        }
-    }
+      e.preventDefault();
+  
+      try {
+          const res = await fetch("http://localhost:9090/api/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password })
+          });
+  
+          const data = await res.json();
+          console.log("Login response:", data); // Debugging response
+  
+          if (data.success && data.user) {
+              console.log("User data received:", data.user);
+              localStorage.setItem("user", JSON.stringify(data.user)); 
+              alert("Login Successful");
+              navigate('/');
+          } else {
+              alert("Invalid credentials");
+          }
+      } catch (error) {
+          console.error("Error during login:", error);
+      }
+  };
+  
+  
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white">
           <form onSubmit={handleLogin} className="bg-gray-800 p-8 rounded-lg shadow-lg">

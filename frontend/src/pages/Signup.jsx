@@ -9,14 +9,24 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:5000/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+    
+    const res = await fetch("http://localhost:9090/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
     });
-    alert("Signup Successful!");
-    navigate('/login');
-  };
+
+    const data = await res.json();
+
+    if (data.success) {
+        localStorage.setItem("user", JSON.stringify(data.user)); // Store user data
+        alert("Signup Successful!");
+        navigate('/');
+    } else {
+        alert("Signup failed!");
+    }
+};
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white">

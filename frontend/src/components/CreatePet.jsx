@@ -12,13 +12,28 @@ const CreatePet = () => {
 
     const Submit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:9090/createmypet/", { petname, description: petdescription, petage, petimage })
-            .then(result => {
-                console.log(result);
-                navigate('/my-page');
-            })
-            .catch(err => console.log(err));
+        
+        const user = JSON.parse(localStorage.getItem("user")); // Retrieve user info
+        if (!user) {
+            alert("Please log in first!");
+            navigate("/login");
+            return;
+        }
+    
+        axios.post("http://localhost:9090/createmypet/", { 
+            petname, 
+            description: petdescription, 
+            petage, 
+            petimage, 
+            created_by: user._id // Use _id instead of email
+        })        
+        .then(result => {
+            console.log(result);
+            navigate('/my-page');
+        })
+        .catch(err => console.log(err));
     };
+    
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-700 via-blue-800 to-green-900">
