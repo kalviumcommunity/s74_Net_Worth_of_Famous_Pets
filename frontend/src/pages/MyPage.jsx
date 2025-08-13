@@ -7,7 +7,7 @@
       const navigate = useNavigate();
       const [myPets, setMyPets] = useState([]);
 
-      const BACKEND_URL = import.meta.env.BACKEND_URL;
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
       useEffect(() => {

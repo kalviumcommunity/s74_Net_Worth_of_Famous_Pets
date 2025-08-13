@@ -12,7 +12,7 @@ const Home = () => {
   const [userPets, setUserPets] = useState([]); 
   const navigate = useNavigate();
 
-  const BACKEND_URL = import.meta.env.BACKEND_UR;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
   useEffect(() => {
