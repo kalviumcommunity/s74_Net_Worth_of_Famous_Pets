@@ -9,9 +9,9 @@ const app = express()
 app.use(express.json())
 dotenv.config()
 
-const api = process.env.FRONTEND_URL
-
-app.use(cors({ origin: api, credentials: true }));
+app.use(cors(
+    { origin: "https://richypets.netlify.app", credentials: true }
+));
 
 connectDB();
 
