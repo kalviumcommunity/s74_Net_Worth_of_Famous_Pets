@@ -7,7 +7,7 @@
       const navigate = useNavigate();
       const [myPets, setMyPets] = useState([]);
 
-      const BACKEND_URL = import.meta.env.BACKEND_URL || "http://localhost:9090/api";
+      const BACKEND_URL = import.meta.env.BACKEND_URL;
 
 
       useEffect(() => {
