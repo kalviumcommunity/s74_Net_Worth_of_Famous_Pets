@@ -1,33 +1,110 @@
-require("dotenv").config();
-const express = require("express");
-const { MongoClient } = require("mongodb");
-const routes = require("./routes"); // Import routes
+import express from "express"
+import connectDB from './database/db.js'
+import dotenv from "dotenv"
+import MyPetModel from "./model/myPet.js"
+import cors from 'cors'
+import authRouter from './routes/authRoutes.js'
 
-const app = express();
-const PORT = 3000;
+const app = express()
+app.use(express.json())
+dotenv.config()
 
-const client = new MongoClient(process.env.MONGO_URI);
+const api = process.env.FRONTEND_URL
 
-async function connectDB() {
-    try {
-        await client.connect();
-        console.log("✅ Database Connected Successfully!");
-    } catch (error) {
-        console.error("❌ Database Connection Failed:", error);
-    }
-}
+app.use(cors({ origin: api, credentials: true }));
 
 connectDB();
 
-app.use(express.json()); // Middleware to parse JSON
-// app.locals.client = client; // Store DB client for routes
+app.use("/api", authRouter);
 
-app.use("/", routes); // Use the CRUD routes
 
-app.get("/ping", (req, res) => {
-    res.send("pong");
-});
+app.get('/', async (req,res)=>{
+    try {
+        const user = await MyPetModel.find({})
+        res.json(user)
+    } 
+    catch (error) {
+        res.json(error)
+    }
+})
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+
+app.post('/createmypet', async (req,res)=>{
+    try {
+        const { petname, description, petage, petimage, created_by } = req.body;
+        if(!petname || !description || !petage || !petimage || !created_by  ){
+            return res.status(404).json({message : "All fields are required"})
+        }
+        const pet = await MyPetModel.create({ petname, description, petage, petimage, created_by });      
+        res.json(pet)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+app.get("/getpet/:id/", async (req,res)=>{
+    try {
+        const {id} = req.params
+        const user = await MyPetModel.findById(id)
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+app.get("/pets-by-user/:userId/", async (req,res)=>{
+    try {
+        const {userId} = req.params
+        const pets = await MyPetModel.find({created_by : userId}).populate("created_by", "name email")
+        res.json(pets)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+app.put('/updatepet/:id/', async (req,res)=>{
+    // const id = req.params.id 
+    // MyPetModel.findByIdAndUpdate({_id:id})
+    // .then(pets => res.json(pets))
+    // .catch(err=>console.log(err))
+    
+    try {
+        const {id} = req.params;
+        const {petname, description, petage, petimage} = req.body;
+
+
+        const UPDATEDPET = await MyPetModel.findByIdAndUpdate(
+            id, {petname, description, petage, petimage},
+            {new : true}
+        );
+
+        if(!UPDATEDPET) return res.status(400).json({message : "Pet not found"})
+        
+        res.status(200).json(UPDATEDPET)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error : "Internal Server Error"})
+    }
+
+
+})
+
+app.delete('/deletePet/:id', async (req,res)=>{
+    try {
+        const {id} = req.params
+        const deletedPet = await MyPetModel.findByIdAndDelete(id)
+        res.status(200).json({message : "Pet deleted Successfully", deletedPet})
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+
+
+
+const port = process.env.PORT 
+
+app.listen(port, (req,res)=> console.log(   `Your server is running in http://localhost:${port}`))
