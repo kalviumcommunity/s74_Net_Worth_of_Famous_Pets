@@ -3,14 +3,20 @@ import connectDB from './database/db.js'
 import dotenv from "dotenv"
 import MyPetModel from "./model/myPet.js"
 import cors from 'cors'
+import authRouter from './routes/authRoutes.js'
 
 const app = express()
 app.use(express.json())
 dotenv.config()
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+const api = process.env.FRONTEND_URL
+
+app.use(cors({ origin: api, credentials: true }));
 
 connectDB();
+
+app.use("/api", authRouter);
+
 
 app.get('/', async (req,res)=>{
     try {
@@ -25,11 +31,11 @@ app.get('/', async (req,res)=>{
 
 app.post('/createmypet', async (req,res)=>{
     try {
-        const { petname, description, petage, petimage } = req.body;
-        if(!petname || !description || !petage || !petimage){
+        const { petname, description, petage, petimage, created_by } = req.body;
+        if(!petname || !description || !petage || !petimage || !created_by  ){
             return res.status(404).json({message : "All fields are required"})
         }
-        const pet = await MyPetModel.create({ petname, description, petage, petimage });      
+        const pet = await MyPetModel.create({ petname, description, petage, petimage, created_by });      
         res.json(pet)
     } catch (error) {
         console.log(error)
@@ -47,6 +53,17 @@ app.get("/getpet/:id/", async (req,res)=>{
     }
 })
 
+app.get("/pets-by-user/:userId/", async (req,res)=>{
+    try {
+        const {userId} = req.params
+        const pets = await MyPetModel.find({created_by : userId}).populate("created_by", "name email")
+        res.json(pets)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
 app.put('/updatepet/:id/', async (req,res)=>{
     // const id = req.params.id 
     // MyPetModel.findByIdAndUpdate({_id:id})
@@ -56,7 +73,7 @@ app.put('/updatepet/:id/', async (req,res)=>{
     try {
         const {id} = req.params;
         const {petname, description, petage, petimage} = req.body;
-        
+
 
         const UPDATEDPET = await MyPetModel.findByIdAndUpdate(
             id, {petname, description, petage, petimage},

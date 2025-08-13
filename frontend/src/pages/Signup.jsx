@@ -7,10 +7,13 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const BACKEND_URL = import.meta.env.BACKEND_URL || "http://localhost:9090/api";
+
+
   const handleSignup = async (e) => {
     e.preventDefault();
     
-    const res = await fetch("http://localhost:9090/api/signup", {
+    const res = await fetch(`${BACKEND_URL}/api/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

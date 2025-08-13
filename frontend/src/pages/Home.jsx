@@ -12,8 +12,11 @@ const Home = () => {
   const [userPets, setUserPets] = useState([]); 
   const navigate = useNavigate();
 
+  const BACKEND_URL = import.meta.env.BACKEND_URL || "http://localhost:9090/api";
+
+
   useEffect(() => {
-    axios.get("http://localhost:9090/api/users")
+    axios.get(`${BACKEND_URL}/api/users`)
       .then(response => setUsers(response.data))
       .catch(error => console.error("Error fetching users:", error));
   }, []);
@@ -135,7 +138,7 @@ const Home = () => {
                 className="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition hover:scale-105 duration-300 border border-gray-700"
               >
                 <img 
-                  src="https://imgs.search.brave.com/DKmKYz_6JYD9E3z1E7WgDCLRDgM8h74JH5ZZEYBUTg4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQ5/MDUyNjMzL3Bob3Rv/L2tpdHRlbi13aXRo/LWhpcy1wYXctdXAu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PUJyaTBXVHRNU3U4/SmFnMEZaSzJYZk9W/bktNR2RRSzU4RU1R/XzUwTVlMOE09" 
+                  src="https://images.pexels.com/photos/2220336/pexels-photo-2220336.jpeg?cs=srgb&dl=pexels-alexasfotos-2220336.jpg&fm=jpg" 
                   alt="Pet"
                   className="w-full h-48 object-cover"
                 />

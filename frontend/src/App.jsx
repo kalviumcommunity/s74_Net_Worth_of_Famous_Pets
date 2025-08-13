@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/login";
-import MyPage from "./pages/MyPage";
-import Signup from "./pages/Signup";
-import CreatePet from "./components/CreatePet";
-import UpdatePet from "./components/UpdatePet";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/login.jsx";
+import MyPage from "./pages/MyPage.jsx";
+import Signup from "./pages/Signup.jsx";
+import CreatePet from "./components/CreatePet.jsx";
+import UpdatePet from "./components/UpdatePet.jsx";
 
 const App = () => {
   return (

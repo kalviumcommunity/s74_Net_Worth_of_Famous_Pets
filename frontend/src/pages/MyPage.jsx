@@ -7,6 +7,9 @@
       const navigate = useNavigate();
       const [myPets, setMyPets] = useState([]);
 
+      const BACKEND_URL = import.meta.env.BACKEND_URL || "http://localhost:9090/api";
+
+
       useEffect(() => {
         const userData = localStorage.getItem("user");
     
@@ -28,7 +31,7 @@
     
             const userId = user._id; // Use the user ID, not email
 
-          axios.get(`http://localhost:9090/pets-by-user/${userId}`)
+          axios.get(`${BACKEND_URL}/pets-by-user/${userId}`)
               .then(result => {
                   console.log("Pets fetched:", result.data);
                   setMyPets(result.data);
